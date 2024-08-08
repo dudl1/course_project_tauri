@@ -1,0 +1,73 @@
+<template>
+    <script>
+        (function (document)
+        {
+            const {
+                button_anylogic,
+
+                button_excel,
+                file_excel
+            } = {
+                button_anylogic: document.getElementById("button_anylogic"),
+
+                button_excel: document.getElementById("button_excel"),
+                file_excel: document.getElementById("file_excel")
+            };
+
+
+            $('.ui.dropdown').dropdown({
+                action: function (text, value, element) {
+                    $(this).dropdown('hide');
+                }
+            });
+
+
+            button_anylogic.onclick = function()
+            {
+                // FILE READER
+                func_file_anylogic()
+            }
+
+            button_excel.onclick = function()
+            {
+                // FILE READER
+                func_file_excel(
+                    file_excel
+                );
+            }
+        })(document);
+    </script>
+
+
+    <div class="window_menu">
+
+        <div class="ui dropdown">
+            <div class="text">Файл</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                <div id="button_anylogic" class="item">
+                    Anylogic
+                </div>
+                <div id="button_excel" class="item">
+                    Excel
+                    <input id="file_excel" style="display: none;" type="file" accept=".xls,.xlsx,.xlsm,.xlsb,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+    <style>
+        .window_menu {
+            display: flex;
+            flex-direction: row;
+            padding: 0 10px 0 10px;
+            z-index: 5;
+        }
+
+        .ui.dropdown .menu {
+            border-radius: 10px;
+        }
+    </style>
+</template>

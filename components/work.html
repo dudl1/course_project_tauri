@@ -1,0 +1,168 @@
+<template>
+    <script>
+        (function (document)
+        {
+            const window_anylogic_close = document.querySelector(".window_anylogic_close");
+            const window_excel_close = document.querySelector(".window_excel_close");
+
+            window_anylogic_close.onclick = function()
+            {
+                document.querySelector(".window_anylogic").classList.remove("active");
+
+                if ( !document.querySelector(".window_anylogic").classList.contains("active") && !document.querySelector(".window_excel").classList.contains("active"))
+                    document.querySelector(".not_work").classList.remove("active");
+            }
+
+            window_excel_close.onclick = function()
+            {
+                document.querySelector(".window_excel").classList.remove("active");
+
+                if ( !document.querySelector(".window_anylogic").classList.contains("active") && !document.querySelector(".window_excel").classList.contains("active"))
+                    document.querySelector(".not_work").classList.remove("active");
+            }
+        })(document);
+    </script>
+
+
+    <div class="work">
+
+        <div class="space">
+
+            <div class="window window_anylogic">
+                <div class="header">
+                    <span class="window_title">Anylogic файл</span>
+                    <svg class="window_anylogic_close window_close" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="512" height="512"><path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/></svg>
+                </div>
+                <div class="content">
+                    <iframe id="anylogic-frame" src=""></iframe>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="window window_excel">
+                <div class="header">
+                    <span class="window_title">Excel файл</span>
+                    <svg class="window_excel_close window_close" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="512" height="512"><path d="M18,6h0a1,1,0,0,0-1.414,0L12,10.586,7.414,6A1,1,0,0,0,6,6H6A1,1,0,0,0,6,7.414L10.586,12,6,16.586A1,1,0,0,0,6,18H6a1,1,0,0,0,1.414,0L12,13.414,16.586,18A1,1,0,0,0,18,18h0a1,1,0,0,0,0-1.414L13.414,12,18,7.414A1,1,0,0,0,18,6Z"/></svg>
+                </div>
+                <div id="excel_content" class="content"></div>
+            </div>
+
+        </div>
+
+        <div class="not_work">
+            <span class="not_work_title">Здесь свободно</span>
+            <span class="not_work_description">Добавьте файлы, чтобы начать работу</span>
+        </div>
+    </div>
+
+
+    <style>
+        .work {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .space {
+            display: grid;
+            justify-content: space-between;
+            grid-template-columns: calc(50% - 3px) 3px calc(50% - 3px);
+            width: 100%;
+            height: 100%;
+        }
+
+        .space .window {
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black;
+            border-left: 15px;
+            opacity: 0;
+            transition: .3s ease;
+        }
+
+        .space .window_anylogic {
+            border: 1px solid #0084ff67;
+            border-radius: 0 15px 0 0;
+        }
+        .space .window_excel {
+            border: 1px solid #00ff0d9f;
+            border-radius: 15px 0 0 0;
+        }
+
+        .window_anylogic.active {
+            pointer-events: all;
+            opacity: 1;
+            transform: translateX(0%);
+        }
+        .window_excel.active {
+            pointer-events: all;
+            opacity: 1;
+            overflow: hidden;
+        }
+        
+        .window {
+            width: 100%;
+            height: 100%;
+        }
+
+        .window .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 30px;
+        }
+
+        .window_anylogic .header { border-radius: 0 13px 0 0; background: #0084ff67; }
+        .window_excel .header { border-radius: 13px 0 0 0; background: #00ff0d9f; }
+
+        .window_title {
+            margin-left: 10px;
+        }
+
+        .window_close {
+            margin-right: 7px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .window .content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .not_work {
+            pointer-events: none;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            transition: .3s ease;
+        }
+
+        .not_work.active { opacity: 0; }
+
+        .not_work_title {
+            font-size: 25px;
+            font-weight: 500;
+        }
+
+        .not_work_description {
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .content > iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</template>
