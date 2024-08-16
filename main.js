@@ -44,14 +44,16 @@ async function loadCSS()
     }
 }
 
+
+const templates = [
+    "./components/window_menu.html",
+    "./components/work.html",
+    "./components/panel_assistant.html"
+];
+
 async function loadExternalTemplates()
 {
     await loadCSS();
-
-    const templates = [
-        './components/window_menu.html',
-        './components/work.html'
-    ];
 
     const contentDiv = document.getElementById('app');
     for (const template of templates)

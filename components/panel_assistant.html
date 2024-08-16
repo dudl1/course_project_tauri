@@ -1,0 +1,144 @@
+<template>
+
+    <script>
+        (function (document)
+        {
+            const input = document.getElementById("textfield_assistant");
+            const output_text_assistant = document.getElementById("output_text_assistant");
+
+            input.addEventListener("keypress", function(event)
+            {
+                if (event.key === "Enter")
+                {
+                    event.preventDefault();
+                    if (!input.value) return false;
+
+                    output_text_assistant.classList.add("work_assistant");
+
+                    // SCRIPT / ASSISTANT
+                    async function getMessage()
+                    {
+                        const message = await assistant(input.value);
+
+                        if (message)
+                            output_text_assistant.classList.remove("work_assistant")
+                            output_text_assistant.classList.add("active");
+
+                        output_text_assistant.innerHTML = message;
+                    }
+                    getMessage();
+                }
+            });
+
+            const close_panel_assistant = document.querySelector(".close_panel_assistant");
+            close_panel_assistant.onclick = function()
+            {
+                const panel_assistant = document.querySelector(".panel_assistant");
+                panel_assistant.classList.remove("active");
+            }
+        })(document)
+    </script>
+
+
+    <div class="panel_assistant">
+        <div class="input_assistant">
+            <input id="textfield_assistant" type="text" placeholder="Задавайте вопрос">
+
+            <div id="output_text_assistant"></div>
+
+            <span class="close_panel_assistant">✕</span>
+        </div>
+    </div>
+
+
+    <style>
+        .panel_assistant {
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            position: absolute;
+            margin: auto;
+            top: 20px;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+        }
+
+        .panel_assistant.active {
+            pointer-events: all;
+            top: 30px;
+            opacity: 1;
+        }
+
+        .panel_assistant .input_assistant {
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
+            width: 500px;
+            border: 1px solid #dbdbdb;
+            border-radius: 12px;
+            -webkit-box-shadow: 0px 0px 35px -6px rgba(0, 0, 0, 0.08);
+            -moz-box-shadow: 0px 0px 35px -6px rgba(0, 0, 0, 0.08);
+            box-shadow: 0px 0px 35px -6px rgba(0, 0, 0, 0.08);
+        }
+
+        .close_panel_assistant {
+            position: absolute;
+            content: "✕";
+            margin: 13px -30px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .panel_assistant input {
+            width: 100%;
+            height: 100%;
+            padding: 15px;
+            outline: none;
+            border: none;
+            border-radius: 12px;
+            color: #414141;
+            font-family: Verdana, sans-serif;
+        }
+        .panel_assistant input::placeholder {
+            color: #414141;
+            font-family: Verdana, sans-serif;
+        }
+
+        #output_text_assistant {
+            display: flex;
+            align-content: flex-start;
+            flex-direction: column;
+            width: 100%;
+            max-height: calc(100vh - 130px);
+            padding: 0px;
+            border-radius: 10px;
+            background: #fff;
+            opacity: 0;
+            overflow-y: scroll;
+            transition: .3s ease;
+        }
+
+        #output_text_assistant.active,
+        #output_text_assistant.work_assistant {
+            padding: 0px 15px 15px 15px;
+            opacity: 1;
+        }
+
+        #output_text_assistant.active::before {
+            content: "Ассистент";
+            margin: -4px 0;
+            font-size: 11px;
+            font-style: italic;
+        }
+
+        #output_text_assistant.work_assistant::before {
+            content: "Печатаю...";
+            margin: -4px 0;
+            font-size: 11px;
+            font-style: italic;
+        }
+    </style>
+
+</template>

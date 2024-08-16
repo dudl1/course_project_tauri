@@ -14,6 +14,8 @@
                 file_excel: document.getElementById("file_excel")
             };
 
+            const assistant = document.getElementById("assistant");
+
 
             $('.ui.dropdown').dropdown({
                 action: function (text, value, element) {
@@ -24,16 +26,22 @@
 
             button_anylogic.onclick = function()
             {
-                // FILE READER
+                // SCRIPT / FILE READER
                 func_file_anylogic()
             }
 
             button_excel.onclick = function()
             {
-                // FILE READER
+                // SCRIPT / FILE READER
                 func_file_excel(
                     file_excel
                 );
+            }
+
+            assistant.onclick = function()
+            {
+                // SCRIPT / ASSISTANT
+                visible_assistant();
             }
         })(document);
     </script>
@@ -55,6 +63,10 @@
             </div>
         </div>
 
+        <div id="assistant" class="ui dropdown">
+            <div class="text">Ассистент</div>
+        </div>
+
     </div>
 
     
@@ -66,6 +78,19 @@
             z-index: 5;
         }
 
+        .window_menu > div:first-child {
+            padding: 0 15px 0 0 !important;
+        }
+        .window_menu > div {
+            padding: 0 15px 0 0 !important;
+        }
+        .window_menu > div:last-child {
+            padding: 0 0 0 0 !important;
+        }
+
+        .ui.dropdown i {
+            margin: 0 0 0 5px !important;
+        }
         .ui.dropdown .menu {
             border-radius: 10px;
         }
