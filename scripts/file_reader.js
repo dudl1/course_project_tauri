@@ -38,8 +38,7 @@ function func_file_excel(file_excel)
                     
                     var worksheet = workbook.Sheets[workbook.SheetNames[0]];
                     var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-                    
+            
                     function parseExcelData(rawData)
                     {
                         if (rawData.length < 2)
@@ -54,8 +53,7 @@ function func_file_excel(file_excel)
                         function createObjectFromRow(row, index)
                         {
                             var obj = { id: index + 1 };
-                            headers.forEach((header, idx)=>
-                            {
+                            headers.forEach((header, idx) => {
                                 obj[header.toLowerCase().replace(/[^a-z0-9]/gi, '_')] = row[idx] || '';
                             });
                             return obj;
@@ -67,7 +65,7 @@ function func_file_excel(file_excel)
                     
                         return tabledata;
                     }
-
+            
                     var tabledata = parseExcelData(jsonData);
             
                     new Tabulator("#excel_content", {
@@ -76,11 +74,29 @@ function func_file_excel(file_excel)
                     });
                 };
                 reader.readAsArrayBuffer(file);
-
+            
                 document.querySelector(".window_excel").classList.add("active");
-                if (!document.querySelector(".not_work").classList.contains("active"))
+                if (!document.querySelector(".not_work").classList.contains("active")) {
                     document.querySelector(".not_work").classList.add("active");
+                }
+            
+                var observer = new MutationObserver(function(mutationsList, observer)
+                {
+                    const tabulars = document.querySelectorAll(".tabulator-cell");
+                    if (tabulars.length > 0)
+                    {
+                        for (let i = 0; i < tabulars.length; i++)
+                        {
+                            const element = tabulars[i];
+                            element.setAttribute("contenteditable", "true");
+                        }
+                        observer.disconnect();
+                    }
+                });
+            
+                observer.observe(document.querySelector("#excel_content"), { childList: true, subtree: true });
             }
+            
         });
 
         isFileExcel = true;
